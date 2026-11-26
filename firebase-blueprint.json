@@ -1,0 +1,229 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A luxury fragrance, perfume oil, body spray, or gift set in the Fragrance Chamber Concept catalog.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "slug": { "type": "string", "minLength": 2, "maxLength": 128, "pattern": "^[a-z0-9\\-]+$" },
+        "name": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "brand": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "sku": { "type": "string", "minLength": 2, "maxLength": 40 },
+        "category": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "fragranceFamily": {
+          "type": "string",
+          "enum": ["Woody", "Floral", "Oriental / Amber", "Fresh", "Citrus", "Gourmand", "Aromatic", "Musky"]
+        },
+        "gender": {
+          "type": "string",
+          "enum": ["Men", "Women", "Unisex"]
+        },
+        "concentration": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "price": { "type": "number" },
+        "previousPrice": { "type": "number" },
+        "description": { "type": "string", "minLength": 10, "maxLength": 2000 },
+        "story": { "type": "string", "maxLength": 2000 },
+        "topNotes": { "type": "array" },
+        "heartNotes": { "type": "array" },
+        "baseNotes": { "type": "array" },
+        "sizes": { "type": "array" },
+        "images": { "type": "array" },
+        "stock": { "type": "integer" },
+        "isNewArrival": { "type": "boolean" },
+        "isBestSeller": { "type": "boolean" },
+        "isFeatured": { "type": "boolean" },
+        "isGiftWorthy": { "type": "boolean" },
+        "salesCount": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "slug", "name", "brand", "category", "fragranceFamily", "gender", "price", "description", "sizes", "images", "stock", "isNewArrival", "isBestSeller", "isFeatured", "createdAt", "updatedAt"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Configurable storefront fragrance category.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "slug": { "type": "string", "minLength": 2, "maxLength": 80, "pattern": "^[a-z0-9\\-]+$" },
+        "description": { "type": "string", "minLength": 4, "maxLength": 240 },
+        "image": { "type": "string", "minLength": 5, "maxLength": 500 },
+        "displayOrder": { "type": "integer" },
+        "active": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "slug", "description", "image", "displayOrder", "active", "updatedAt"]
+    },
+    "StoreSettings": {
+      "title": "StoreSettings",
+      "description": "Storewide configurable announcement bar and featured editorial collection.",
+      "type": "object",
+      "properties": {
+        "announcementText": { "type": "string", "minLength": 2, "maxLength": 180 },
+        "announcementEnabled": { "type": "boolean" },
+        "featuredTitle": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "featuredSubtitle": { "type": "string", "minLength": 5, "maxLength": 300 },
+        "featuredProductIds": { "type": "array" },
+        "freeShippingThreshold": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["announcementText", "announcementEnabled", "featuredTitle", "featuredSubtitle", "featuredProductIds", "freeShippingThreshold", "updatedAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase order with shipping details, payment method, and status.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "orderCode": { "type": "string", "minLength": 4, "maxLength": 32, "pattern": "^[A-Z0-9\\-]+$" },
+        "userId": { "type": "string", "minLength": 2, "maxLength": 128 },
+        "customerName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "customerEmail": { "type": "string", "format": "email", "maxLength": 160 },
+        "customerPhone": { "type": "string", "minLength": 5, "maxLength": 40 },
+        "shippingAddress": { "type": "string", "minLength": 5, "maxLength": 300 },
+        "city": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "postalCode": { "type": "string", "minLength": 2, "maxLength": 24 },
+        "country": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "giftWrap": { "type": "boolean" },
+        "giftNote": { "type": "string", "maxLength": 400 },
+        "paymentMethod": { "type": "string", "enum": ["card", "cod", "bank_transfer"] },
+        "paymentStatus": { "type": "string", "enum": ["paid", "pending_cod", "awaiting_transfer"] },
+        "status": { "type": "string", "enum": ["confirmed", "preparing", "shipped", "delivered", "cancelled"] },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "shippingFee": { "type": "number" },
+        "total": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "orderCode", "userId", "customerName", "customerEmail", "customerPhone", "shippingAddress", "city", "postalCode", "country", "giftWrap", "paymentMethod", "paymentStatus", "status", "items", "subtotal", "shippingFee", "total", "createdAt", "updatedAt"]
+    },
+    "OrderTracker": {
+      "title": "OrderTracker",
+      "description": "Publicly queryable by exact orderCode without exposing customer PII.",
+      "type": "object",
+      "properties": {
+        "orderCode": { "type": "string", "minLength": 4, "maxLength": 32, "pattern": "^[A-Z0-9\\-]+$" },
+        "userId": { "type": "string", "minLength": 2, "maxLength": 128 },
+        "status": { "type": "string", "enum": ["confirmed", "preparing", "shipped", "delivered", "cancelled"] },
+        "paymentStatus": { "type": "string", "enum": ["paid", "pending_cod", "awaiting_transfer"] },
+        "itemCount": { "type": "integer" },
+        "total": { "type": "number" },
+        "carrierNote": { "type": "string", "maxLength": 240 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["orderCode", "userId", "status", "paymentStatus", "itemCount", "total", "createdAt", "updatedAt"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Genuine customer review tied to an authenticated buyer.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "productId": { "type": "string", "minLength": 2, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "productName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "userId": { "type": "string", "minLength": 2, "maxLength": 128 },
+        "authorName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "rating": { "type": "integer" },
+        "comment": { "type": "string", "minLength": 5, "maxLength": 800 },
+        "verifiedPurchase": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "productId", "productName", "userId", "authorName", "rating", "comment", "verifiedPurchase", "createdAt"]
+    },
+    "NewsletterSubscriber": {
+      "title": "NewsletterSubscriber",
+      "description": "Newsletter subscription record stored in Firestore.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email", "maxLength": 160 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "createdAt"]
+    },
+    "Inquiry": {
+      "title": "Inquiry",
+      "description": "Customer contact or order inquiry submitted through Contact or Order Tracking.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "email": { "type": "string", "format": "email", "maxLength": 160 },
+        "orderCode": { "type": "string", "maxLength": 32 },
+        "subject": { "type": "string", "minLength": 2, "maxLength": 140 },
+        "message": { "type": "string", "minLength": 5, "maxLength": 1500 },
+        "status": { "type": "string", "enum": ["open", "resolved"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "subject", "message", "status", "createdAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Private customer account profile storing wishlist and saved cart.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 2, "maxLength": 128 },
+        "displayName": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "format": "email", "maxLength": 160 },
+        "wishlist": { "type": "array" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "wishlist", "updatedAt"]
+    },
+    "AdminRecord": {
+      "title": "AdminRecord",
+      "description": "Elevated boutique administrator marker.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 2, "maxLength": 128 },
+        "email": { "type": "string", "format": "email", "maxLength": 160 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Public fragrance product catalog; admin-only mutations."
+    },
+    "/categories/{categoryId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Public storefront categories; admin-only mutations."
+    },
+    "/settings/{settingId}": {
+      "schema": { "$ref": "#/entities/StoreSettings" },
+      "description": "Storefront configuration including announcement bar and featured collection."
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer orders isolated to the owning userId or admins."
+    },
+    "/orderTrackers/{orderCode}": {
+      "schema": { "$ref": "#/entities/OrderTracker" },
+      "description": "PII-free order tracking records readable by exact orderCode."
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Genuine customer fragrance reviews."
+    },
+    "/newsletterSubscribers/{subscriberId}": {
+      "schema": { "$ref": "#/entities/NewsletterSubscriber" },
+      "description": "Newsletter subscriber email records (write-only for visitors, read-only for admins)."
+    },
+    "/inquiries/{inquiryId}": {
+      "schema": { "$ref": "#/entities/Inquiry" },
+      "description": "Customer contact and order inquiries (create by visitors, managed by admins)."
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Private customer profile and wishlist isolated per userId."
+    },
+    "/admins/{userId}": {
+      "schema": { "$ref": "#/entities/AdminRecord" },
+      "description": "Authorized admin registry."
+    }
+  }
+}

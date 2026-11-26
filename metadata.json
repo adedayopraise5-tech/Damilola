@@ -1,0 +1,6 @@
+{
+  "name": "Fragrance Chamber Concept",
+  "description": "A luxury fragrance boutique offering curated perfumes, niche scents, perfume oils, body sprays, and bespoke gift sets. Discover your signature scent.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
